@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.shoppping.dreamshops.exceptions.ProductNotFoundException;
 import com.shoppping.dreamshops.exceptions.ResourceNotFoundException;
 import com.shoppping.dreamshops.model.Product;
 import com.shoppping.dreamshops.repository.ProductRepository;
@@ -26,7 +27,9 @@ public class ProductService implements IProductService {
 
 	@Override
 	public void deleteProductById(Long id) {
-		productRepository.findById(id).ifPresent(productRepository::delete);
+		productRepository.findById(id)
+		.ifPresentOrElse(productRepository::delete,
+				()->{throw new ProductNotFoundException("Product not found!");});
 
 	}
 
@@ -38,8 +41,7 @@ public class ProductService implements IProductService {
 
 	@Override
 	public List<Product> getAllProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findAll();
 	}
 
 	@Override
