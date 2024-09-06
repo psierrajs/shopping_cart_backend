@@ -26,7 +26,7 @@ public class ProductService implements IProductService {
 
 	@Override
 	public void deleteProductById(Long id) {
-		// TODO Auto-generated method stub
+		productRepository.findById(id).ifPresent(productRepository::delete);
 
 	}
 
