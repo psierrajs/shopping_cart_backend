@@ -3,10 +3,11 @@ package com.shoppping.dreamshops.service.product;
 import java.util.List;
 
 import com.shoppping.dreamshops.model.Product;
+import com.shoppping.dreamshops.request.AddProductRequest;
 
 public interface IProductService {
 
-	Product addProduct(Product product);
+	Product addProduct(AddProductRequest request);
 	Product getProductById(Long id);
 	void deleteProductById(Long id);
 	void updateProduct(Product product, Long productId);

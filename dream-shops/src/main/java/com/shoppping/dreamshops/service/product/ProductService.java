@@ -8,6 +8,7 @@ import com.shoppping.dreamshops.exceptions.ProductNotFoundException;
 import com.shoppping.dreamshops.exceptions.ResourceNotFoundException;
 import com.shoppping.dreamshops.model.Product;
 import com.shoppping.dreamshops.repository.ProductRepository;
+import com.shoppping.dreamshops.request.AddProductRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +18,7 @@ public class ProductService implements IProductService {
 	private final ProductRepository productRepository;
 
 	@Override
-	public Product addProduct(Product product) {
+	public Product addProduct(AddProductRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
