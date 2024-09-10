@@ -9,9 +9,12 @@ import com.shoppping.dreamshops.exceptions.ResourceNotFoundException;
 import com.shoppping.dreamshops.model.Product;
 import com.shoppping.dreamshops.repository.ProductRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ProductService implements IProductService {
-	private ProductRepository productRepository;
+	private final ProductRepository productRepository;
 
 	@Override
 	public Product addProduct(Product product) {
@@ -46,38 +49,32 @@ public class ProductService implements IProductService {
 
 	@Override
 	public List<Product> getProductsByCategory(String category) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByCategoryName(category);
 	}
 
 	@Override
-	public List<Product> getProductByBrand(String brand) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getProductsByBrand(String brand) {
+		return productRepository.findByBrand(brand);
 	}
 
 	@Override
 	public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByCategoryNameAndBrand(category, brand);
 	}
 
 	@Override
 	public List<Product> getProductsByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByName(name);
 	}
 
 	@Override
 	public List<Product> getProductsByBrandAndName(String brand, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByBrandAndName(brand, name);
 	}
 
 	@Override
 	public Long countProductsByBrandAndName(String brand, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.countByBrandAndName(brand, name);
 	}
 
 }
