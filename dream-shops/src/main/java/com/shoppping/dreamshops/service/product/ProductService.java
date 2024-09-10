@@ -1,12 +1,15 @@
 package com.shoppping.dreamshops.service.product;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.shoppping.dreamshops.exceptions.ProductNotFoundException;
 import com.shoppping.dreamshops.exceptions.ResourceNotFoundException;
+import com.shoppping.dreamshops.model.Category;
 import com.shoppping.dreamshops.model.Product;
+import com.shoppping.dreamshops.repository.CategoryRepository;
 import com.shoppping.dreamshops.repository.ProductRepository;
 import com.shoppping.dreamshops.request.AddProductRequest;
 
@@ -16,11 +19,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
 	private final ProductRepository productRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Override
 	public Product addProduct(AddProductRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		// check if the category is found in the DB
+		// If Yes, set it as the new product category
+		// If No, then save it as a new category
+		// Then set it as the new product category.
+		Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
+				.orElseGet(()-> {
+					Category newCategory = new Category(request.getCategory().getName());
+					return categoryRepository.save(newCategory);
+				});
+		request.setCategory(category);
+		return productRepository.save(createProduct(request, category));
+	}
+	
+	private Product createProduct(AddProductRequest request, Category category) {
+		return new Product(
+				request.getName(),
+				request.getBrand(),
+				request.getPrice(),
+				request.getInventory(),
+				request.getDescription(),
+				category
+				);
 	}
 
 	@Override
