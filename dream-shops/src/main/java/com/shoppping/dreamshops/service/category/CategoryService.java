@@ -2,14 +2,24 @@ package com.shoppping.dreamshops.service.category;
 
 import java.util.List;
 
-import com.shoppping.dreamshops.model.Category;
+import org.springframework.stereotype.Service;
 
+import com.shoppping.dreamshops.exceptions.ResourceNotFoundException;
+import com.shoppping.dreamshops.model.Category;
+import com.shoppping.dreamshops.repository.CategoryRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class CategoryService implements ICategoryService{
 
+	private final CategoryRepository categoryRepository;
+	
 	@Override
 	public Category getCategoryBytId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Category not foun!d"));
 	}
 
 	@Override
