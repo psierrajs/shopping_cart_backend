@@ -24,8 +24,7 @@ public class CategoryService implements ICategoryService{
 
 	@Override
 	public Category getCategoryByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findByName(name);
 	}
 
 	@Override
