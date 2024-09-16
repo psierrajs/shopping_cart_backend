@@ -29,8 +29,7 @@ public class CategoryService implements ICategoryService{
 
 	@Override
 	public List<Category> getAllCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findAll();
 	}
 
 	@Override
