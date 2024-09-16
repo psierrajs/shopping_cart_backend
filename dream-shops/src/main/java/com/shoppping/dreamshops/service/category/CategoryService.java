@@ -1,6 +1,7 @@
 package com.shoppping.dreamshops.service.category;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class CategoryService implements ICategoryService{
 	private final CategoryRepository categoryRepository;
 	
 	@Override
-	public Category getCategoryBytId(Long id) {
+	public Category getCategoryById(Long id) {
 		return categoryRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Category not foun!d"));
 	}
@@ -39,9 +40,11 @@ public class CategoryService implements ICategoryService{
 	}
 
 	@Override
-	public Category updateCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category updateCategory(Category category, Long id) {
+		return Optional.ofNullable(getCategoryById(id)).map(oldCategory -> {
+			oldCategory.setName(category.getName());
+			return categoryRepository.save(oldCategory);
+		}) .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
 	}
 
 	@Override
